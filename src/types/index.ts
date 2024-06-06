@@ -15,6 +15,9 @@ interface UserSchemaTS extends Document {
   isAcceptingMessage: boolean;
   message: Array<MessageSchemaTS>;
 }
+interface UserDocumentTS extends Document, UserSchemaTS {
+  isPasswordCorrect(password: string): Promise<boolean>;
+}
 
 type ConnectionObject = {
   isConnected?: number;
@@ -27,4 +30,9 @@ interface ApiResponceTS {
   messages?: Array<MessageSchemaTS>;
 }
 
-export type { MessageSchemaTS, UserSchemaTS, ConnectionObject, ApiResponceTS };
+export type {
+  MessageSchemaTS,
+  UserDocumentTS,
+  ConnectionObject,
+  ApiResponceTS,
+};

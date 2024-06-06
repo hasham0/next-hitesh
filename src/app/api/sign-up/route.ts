@@ -64,12 +64,11 @@ export async function POST(request: NextRequest | Request) {
       }
     );
   } catch (error) {
-    console.log("🚀 ~ POST ~ Sign up error:", error);
     const err = (error as { message: string }).message;
     return NextResponse.json(
       {
         success: false,
-        message: `${err}|| Failed to sign up`,
+        message: `${err} || Failed to sign up`,
       },
       {
         status: 500,

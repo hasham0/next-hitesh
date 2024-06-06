@@ -1,5 +1,5 @@
 import bcryptjs from "bcryptjs";
-import { MessageSchemaTS, UserSchemaTS } from "@/types";
+import { MessageSchemaTS, UserDocumentTS } from "@/types";
 import { Model, Schema, model, models } from "mongoose";
 
 const MessageSchema = new Schema<MessageSchemaTS>(
@@ -13,7 +13,7 @@ const MessageSchema = new Schema<MessageSchemaTS>(
   }
 );
 
-const UserSchema = new Schema<UserSchemaTS>(
+const UserSchema = new Schema<UserDocumentTS>(
   {
     username: {
       type: String,
@@ -73,7 +73,7 @@ UserSchema.methods.isPasswordCorrect = async function (
 };
 
 const User =
-  (models?.["User"] as Model<UserSchemaTS>) ||
-  model<UserSchemaTS>("User", UserSchema);
+  (models?.["User"] as Model<UserDocumentTS>) ||
+  model<UserDocumentTS>("User", UserSchema);
 
 export default User;
