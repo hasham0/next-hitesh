@@ -1,3 +1,4 @@
+import SignInForm from "@/components/shared/sign-in-form";
 import { signIn } from "@/lib/auth";
 import React from "react";
 
@@ -12,6 +13,7 @@ export default function SignIn({}: Props) {
       }}
     >
       <button type="submit">Sign in</button>
+      <SignInForm />
     </form>
   );
 }
