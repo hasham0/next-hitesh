@@ -57,7 +57,7 @@ const UserSchema = new Schema<UserDocumentTS>(
   }
 );
 
-// encrypt password
+//note => encrypt password:
 UserSchema.pre("save", async function (next): Promise<void> {
   if (!this.isModified("password")) return next();
   const salt = await bcryptjs.genSalt(10);
@@ -65,7 +65,7 @@ UserSchema.pre("save", async function (next): Promise<void> {
   next();
 });
 
-// compare password
+//note => compare password:
 UserSchema.methods.isPasswordCorrect = async function (
   password: string
 ): Promise<boolean> {
