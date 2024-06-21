@@ -31,6 +31,7 @@ interface ApiResponceTS {
 }
 
 export type {
+  UserSchemaTS,
   MessageSchemaTS,
   UserDocumentTS,
   ConnectionObject,

@@ -27,7 +27,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
       },
       async authorize(credentials: any): Promise<any> {
-        console.log("🚀 ~ authorize ~ credentials:", credentials);
+        console.table("🚀 ~ authorize ~ credentials:", credentials);
         await dbConnection();
         try {
           const user = await User.findOne({
@@ -50,7 +50,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           }
           return user;
         } catch (error) {
-          console.log("🚀 ~ authorize ~ error:", error);
+          console.error("🚀 ~ authorize ~ error:", error);
           const err = (error as { message: string }).message;
           throw new Error(err);
         }
