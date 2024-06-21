@@ -3,7 +3,7 @@ import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import Facebook from "next-auth/providers/facebook";
 import Credentials from "next-auth/providers/credentials";
-import dbConnection from "@/lib/dbConnect";
+import dbConnection from "@/database/dbConnect";
 import User from "@/models/user.model";
 import { env } from "@/lib/env";
 
