@@ -1,5 +1,5 @@
 import { auth } from "@/lib/auth";
-import dbConnection from "@/lib/dbConnect";
+import dbConnection from "@/database/dbConnect";
 import User from "@/models/user.model";
 import mongoose from "mongoose";
 import { User as authUser } from "next-auth";

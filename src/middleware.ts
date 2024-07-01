@@ -3,6 +3,7 @@ import { env } from "@/lib/env";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(request: NextRequest) {
+  console.log(request);
   const token = await getToken({
     req: request,
     secret: env.AUTH_SECRET,

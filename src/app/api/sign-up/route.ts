@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import dbConnection from "@/lib/dbConnect";
+import dbConnection from "@/database/dbConnect";
 import sendVerificationEmail from "@/utils/sendVerifcationEmail";
 import User from "@/models/user.model";
 
@@ -95,7 +95,7 @@ export async function POST(request: NextRequest | Request) {
       username,
       verifyCode
     );
-
+    console.log(emailResponce);
     if (!emailResponce.success) {
       throw new Error(emailResponce.message);
     }

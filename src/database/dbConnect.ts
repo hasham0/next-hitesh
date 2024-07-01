@@ -1,6 +1,6 @@
 import { ConnectionObject } from "@/types";
 import mongoose from "mongoose";
-import { env } from "./env";
+import { env } from "../lib/env";
 
 const connection: ConnectionObject = {};
 
