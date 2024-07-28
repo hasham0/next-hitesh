@@ -10,9 +10,18 @@ import { env } from "@/lib/env";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   debug: true,
   providers: [
-    GitHub,
-    Google,
-    Facebook,
+    GitHub({
+      clientId: env.NEXT_PUBLIC_AUTH_GITHUB_ID,
+      clientSecret: env.NEXT_PUBLIC_AUTH_GITHUB_SECRET,
+    }),
+    Google({
+      clientId: env.NEXT_PUBLIC_AUTH_GOOGLE_ID,
+      clientSecret: env.NEXT_PUBLIC_AUTH_GOOGLE_SECRET,
+    }),
+    Facebook({
+      clientId: env.NEXT_PUBLIC_AUTH_FACEBOOK_ID,
+      clientSecret: env.NEXT_PUBLIC_AUTH_FACEBOOK_SECRET,
+    }),
     Credentials({
       credentials: {
         email: {

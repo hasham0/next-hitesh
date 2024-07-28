@@ -1,4 +1,4 @@
-import resend from "@/lib/resnd";
+import resend from "@/lib/resend";
 import VerificationEmail from "@/templates/verificationEmailTemp";
 import { ApiResponceTS } from "@/types";
 

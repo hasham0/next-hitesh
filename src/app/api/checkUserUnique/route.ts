@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(
       {
         status: true,
-        messaege: "username is avaliable",
+        message: "username is avaliable",
       },
       { status: 200 }
     );
