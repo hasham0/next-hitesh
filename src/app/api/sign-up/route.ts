@@ -11,9 +11,11 @@ export async function POST(request: NextRequest | Request) {
       username,
       isVerifired: true,
     });
+
     if (isUsernameExistAndVerified) {
       throw new Error("username is already in use");
     }
+
     const isUserEmailExist = await User.findOne({
       email,
     });
@@ -83,21 +85,25 @@ export async function POST(request: NextRequest | Request) {
       isUserEmailExist.verifyCode = verifyCode;
       isUserEmailExist.verifyCodeExpiry = new Date(Date.now() + 3600000);
       await isUserEmailExist.save({ validateBeforeSave: false });
+
+      const emailResponce = await sendVerificationEmail(
+        email,
+        username,
+        verifyCode,
+      );
+
+      console.log(" --------------------------------------------");
+      console.log("route.ts:113  emailResponce => ", emailResponce);
+      console.log(" --------------------------------------------");
+
+      if (!emailResponce.success) {
+        throw new Error(emailResponce.message);
+      }
     }
     // if user exist in database and also verified
     else {
       await isUserEmailExist.save({ validateBeforeSave: false });
       throw new Error("User already exists with this email");
-    }
-
-    const emailResponce = await sendVerificationEmail(
-      email,
-      username,
-      verifyCode
-    );
-    console.log(emailResponce);
-    if (!emailResponce.success) {
-      throw new Error(emailResponce.message);
     }
 
     return NextResponse.json(
@@ -107,7 +113,7 @@ export async function POST(request: NextRequest | Request) {
       },
       {
         status: 200,
-      }
+      },
     );
   } catch (error) {
     const err = (error as { message: string }).message;
@@ -118,7 +124,7 @@ export async function POST(request: NextRequest | Request) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

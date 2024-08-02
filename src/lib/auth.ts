@@ -1,3 +1,4 @@
+import { User as authUser } from "next-auth";
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
@@ -35,8 +36,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           placeholder: "Enter your password",
         },
       },
-      async authorize(credentials: any): Promise<any> {
-        console.table("🚀 ~ authorize ~ credentials:", credentials);
+      async authorize(credentials: any): Promise<authUser> {
+        console.log(" ----------------------------------------------");
+        console.table("file: auth.ts:39 credentials => ", credentials);
+        console.log(" ----------------------------------------------");
+
         await dbConnection();
         try {
           const user = await User.findOne({
@@ -48,18 +52,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           if (!user) {
             throw new Error("no user found with this email or username");
           }
-          if (!user.isVerifired) {
+          if (!user.isVerified) {
             throw new Error("please verify account before login");
           }
           const isPasswordMatch = await user.isPasswordCorrect(
-            credentials.password
+            credentials.password,
           );
           if (!isPasswordMatch) {
             throw new Error("incorrect password");
           }
-          return user;
+          return user as authUser;
         } catch (error) {
-          console.error("🚀 ~ authorize ~ error:", error);
+          console.log(" --------------------------------------------");
+          console.log("file: auth.ts:62  authorize  error => ", error);
+          console.log(" --------------------------------------------");
+
           const err = (error as { message: string }).message;
           throw new Error(err);
         }

@@ -5,7 +5,7 @@ import { ApiResponceTS } from "@/types";
 async function sendVerificationEmail(
   email: string,
   username: string,
-  verifyCode: string
+  verifyCode: string,
 ): Promise<ApiResponceTS> {
   try {
     await resend.emails.send({
@@ -19,7 +19,10 @@ async function sendVerificationEmail(
       message: "Verification email send successfully",
     };
   } catch (error) {
-    console.error("🚀 ~ send email error => ", error);
+    console.log(" -------------------------------------------------");
+    console.log("file: sendVerifcationEmail.ts:22  error => ", error);
+    console.log(" -------------------------------------------------");
+
     return {
       success: false,
       message: "Failed to send verification email",

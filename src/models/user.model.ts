@@ -10,7 +10,7 @@ const MessageSchema = new Schema<MessageSchemaTS>(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const UserSchema = new Schema<UserDocumentTS>(
@@ -42,7 +42,7 @@ const UserSchema = new Schema<UserDocumentTS>(
     verifyCodeExpiry: {
       type: Date,
     },
-    isVerifired: {
+    isVerified: {
       type: Boolean,
       default: false,
     },
@@ -54,7 +54,7 @@ const UserSchema = new Schema<UserDocumentTS>(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 //note => encrypt password:
@@ -67,7 +67,7 @@ UserSchema.pre("save", async function (next): Promise<void> {
 
 //note => compare password:
 UserSchema.methods.isPasswordCorrect = async function (
-  password: string
+  password: string,
 ): Promise<boolean> {
   return await bcryptjs.compare(password, this.password);
 };

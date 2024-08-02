@@ -11,7 +11,7 @@ interface UserSchemaTS extends Document {
   password: string;
   verifyCode: string;
   verifyCodeExpiry: Date;
-  isVerifired: boolean;
+  isVerified: boolean;
   isAcceptingMessage: boolean;
   message: Array<MessageSchemaTS>;
 }
