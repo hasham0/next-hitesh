@@ -18,7 +18,10 @@ export async function GET(request: NextRequest) {
     const result = UsenameQuerySchema.safeParse(queryParams);
     if (!result.success) {
       const usernameError = result.error.format().username?._errors || [];
-      console.log("🚀 ~ GET ~ usernameError:", usernameError);
+      console.log(" -------------------------------------------------------");
+      console.log("file: route.ts:21  GET  usernameError => ", usernameError);
+      console.log(" -------------------------------------------------------");
+
       throw new Error("username valid error");
     }
     const { username } = result.data;
@@ -27,7 +30,10 @@ export async function GET(request: NextRequest) {
       isVerifired: true,
     });
     if (isUserExist) {
-      console.log("🚀 ~ GET ~ isUserExist:", isUserExist);
+      console.log(" ---------------------------------------------------");
+      console.log("file: route.ts:33  GET  isUserExist => ", isUserExist);
+      console.log(" ---------------------------------------------------");
+
       throw new Error("username is already taken");
     }
 

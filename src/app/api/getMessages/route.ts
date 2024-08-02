@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
       },
       {
         status: 200,
-      }
+      },
     );
   } catch (error) {
     const err = (error as { message: string }).message;
@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

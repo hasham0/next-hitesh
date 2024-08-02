@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       {
         $set: { isAcceptingMessage: acceptMessages },
       },
-      { new: true }
+      { new: true },
     );
     if (!updateUser) {
       throw new Error("user cannot update");
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
       },
       {
         status: 500,
-      }
+      },
     );
   } catch (error) {
     const err = (error as { message: string }).message;
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }
@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
       { success: true, isAcceptingMesssages: isUserFound?.isAcceptingMessage },
       {
         status: 200,
-      }
+      },
     );
   } catch (error) {
     const err = (error as { message: string }).message;
@@ -74,7 +74,7 @@ export async function GET(request: NextRequest) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }
