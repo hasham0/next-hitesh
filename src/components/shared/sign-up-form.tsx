@@ -4,14 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { ChangeEvent, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useDebounceCallback, useDebounceValue } from "usehooks-ts";
+import { useDebounceCallback } from "usehooks-ts";
 import * as z from "zod";
 import axios, { AxiosError } from "axios";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -46,18 +45,18 @@ const SignUpForm = () => {
   /* <!-- check username uniqueness --> */
   useEffect(() => {
     const checkUsernameUnique = async () => {
+      setIsCheckingUsername(true);
       if (username) {
-        setIsCheckingUsername(true);
         setUsernameMessage(""); // Reset message
         try {
           const response = await axios.get<ApiResponceTS>(
-            `/api/checkUserUnique?username=${username}`
+            `/api/checkUserUnique?username=${username}`,
           );
           setUsernameMessage(response.data.message);
         } catch (error) {
           const axiosError = error as AxiosError<ApiResponceTS>;
           setUsernameMessage(
-            axiosError.response?.data.message ?? "Error checking username"
+            axiosError.response?.data.message ?? "Error checking username",
           );
         } finally {
           setIsCheckingUsername(false);
@@ -66,14 +65,14 @@ const SignUpForm = () => {
     };
     checkUsernameUnique();
     return () => {};
-  }, [username]);
+  }, [username, toast]);
 
   /* <!-- submit form --> */
   const onSubmitSignUpForm: SubmitHandler<
     z.infer<typeof signUpSchema>
   > = async (data) => {
-    setIsSubmitting(false);
     try {
+      setIsSubmitting(true);
       const responce = await axios.post<ApiResponceTS>("/api/sign-up", data);
       console.log(" ----------------------------------------------------");
       console.log("file: sign-up-form.tsx:78  >=  responce => ", responce);
@@ -97,10 +96,17 @@ const SignUpForm = () => {
       setIsSubmitting(false);
     }
   };
+
   return (
     <>
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+      <div className="flex min-h-screen items-center justify-center bg-gray-100">
+        <div className="w-full max-w-md space-y-8 rounded-lg bg-white p-8 shadow-md">
+          <div className="text-center">
+            <h1 className="mb-6 text-4xl font-extrabold tracking-tight lg:text-5xl">
+              Join True Feedback
+            </h1>
+            <p className="mb-4">Sign up to start your anonymous adventure</p>
+          </div>
           <div className="text-center">
             <Form {...form}>
               <form
@@ -130,7 +136,9 @@ const SignUpForm = () => {
                             : "text-red-500"
                         }`}
                       >
-                        test:{usernameMessage}
+                        {usernameMessage ? (
+                          <> test : {usernameMessage}</>
+                        ) : null}
                       </p>
                       <FormMessage />
                     </FormItem>
@@ -178,9 +186,9 @@ const SignUpForm = () => {
                 </Button>
               </form>
             </Form>
-            <div className="text-center mt-4">
+            <div className="mt-4 text-center">
               <p>
-                Already member?
+                Already member?&nbsp;
                 <Link
                   href={"/sign-in"}
                   className="text-blue-600 hover:text-blue-800"

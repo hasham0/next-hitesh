@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     const isCodeNotExpire = new Date(user.verifyCodeExpiry) > new Date();
 
     if (isCodeValid && isCodeNotExpire) {
-      user.isVerifired = true;
+      user.isVerified = true;
       await user.save();
       return NextResponse.json(
         {
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
         },
         {
           status: 200,
-        }
+        },
       );
     } else if (!isCodeNotExpire) {
       return NextResponse.json(
@@ -35,12 +35,12 @@ export async function POST(request: NextRequest) {
           message:
             "Verification code has expired. Please sign up again to get a new code.",
         },
-        { status: 400 }
+        { status: 400 },
       );
     } else {
       return NextResponse.json(
         { success: false, message: "Incorrect verification code" },
-        { status: 400 }
+        { status: 400 },
       );
     }
   } catch (error) {
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

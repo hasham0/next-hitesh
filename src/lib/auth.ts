@@ -9,7 +9,7 @@ import User from "@/models/user.model";
 import { env } from "@/lib/env";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  debug: true,
+  debug: env.NODE_ENV !== "production",
   providers: [
     GitHub({
       clientId: env.NEXT_PUBLIC_AUTH_GITHUB_ID,
@@ -24,6 +24,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: env.NEXT_PUBLIC_AUTH_FACEBOOK_SECRET,
     }),
     Credentials({
+      name: "credentials",
       credentials: {
         email: {
           label: "Email",
@@ -37,18 +38,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
       },
       async authorize(credentials: any): Promise<authUser> {
-        console.log(" ----------------------------------------------");
-        console.table("file: auth.ts:39 credentials => ", credentials);
-        console.log(" ----------------------------------------------");
-
         await dbConnection();
         try {
           const user = await User.findOne({
             $or: [
-              { email: credentials.identifer.email },
-              { username: credentials.identifer.username },
+              { email: credentials.identifier },
+              { username: credentials.identifier },
             ],
           }).select("+password");
+
           if (!user) {
             throw new Error("no user found with this email or username");
           }

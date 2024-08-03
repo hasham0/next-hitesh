@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
       console.log("file: route.ts:21  GET  usernameError => ", usernameError);
       console.log(" -------------------------------------------------------");
 
-      throw new Error("username valid error");
+      throw new Error(usernameError[0].toString() || "username valid error");
     }
     const { username } = result.data;
     const isUserExist = await User.findOne({
@@ -30,10 +30,6 @@ export async function GET(request: NextRequest) {
       isVerifired: true,
     });
     if (isUserExist) {
-      console.log(" ---------------------------------------------------");
-      console.log("file: route.ts:33  GET  isUserExist => ", isUserExist);
-      console.log(" ---------------------------------------------------");
-
       throw new Error("username is already taken");
     }
 
@@ -42,7 +38,7 @@ export async function GET(request: NextRequest) {
         status: true,
         message: "username is avaliable",
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     const err = (error as { message: string }).message;
@@ -53,7 +49,7 @@ export async function GET(request: NextRequest) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

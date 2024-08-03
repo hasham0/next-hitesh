@@ -5,6 +5,7 @@ export const env = createEnv({
   server: {
     MONGODB_URI: z.string().url(),
     AUTH_SECRET: z.string().min(10),
+    NODE_ENV: z.string().min(3),
   },
   client: {
     NEXT_PUBLIC_RESEND_API_KEY: z.string().min(5),
@@ -16,6 +17,7 @@ export const env = createEnv({
     NEXT_PUBLIC_AUTH_GOOGLE_SECRET: z.string().min(5),
   },
   runtimeEnv: {
+    NODE_ENV: process.env.NODE_ENV,
     MONGODB_URI: process.env.MONGODB_URI,
     NEXT_PUBLIC_RESEND_API_KEY: process.env.NEXT_PUBLIC_RESEND_API_KEY,
     AUTH_SECRET: process.env.AUTH_SECRET,

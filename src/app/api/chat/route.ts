@@ -14,22 +14,21 @@ export async function GET(req: Request) {
     const data = new StreamData();
     data.append({ test: "value" });
 
-    // const result = await streamText({
-    //   model: openai("gpt-3.5-turbo"),
-    //   prompt,
-    //   onFinish() {
-    //     data.close();
-    //   },
-    // });
-    // const resultData = result.toAIStreamResponse({ data });
-
     const result = await streamText({
-      model: openai("gpt-4-turbo"),
+      model: openai("gpt-3.5-turbo"),
       prompt,
       onFinish() {
         data.close();
       },
     });
+
+    // const result = await streamText({
+    //   model: openai("gpt-4-turbo"),
+    //   prompt,
+    //   onFinish() {
+    //     data.close();
+    //   },
+    // });
     const resultData = result.toAIStreamResponse({ data });
 
     return NextResponse.json({

@@ -117,6 +117,7 @@ export async function POST(request: NextRequest | Request) {
     );
   } catch (error) {
     const err = (error as { message: string }).message;
+    console.log(err);
     return NextResponse.json(
       {
         success: false,

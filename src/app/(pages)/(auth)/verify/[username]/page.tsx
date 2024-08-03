@@ -1,3 +1,5 @@
+import VerifyCode from "@/components/shared/verify-form";
+import { useToast } from "@/components/ui/use-toast";
 import React from "react";
 
 type Props = {
@@ -5,9 +7,9 @@ type Props = {
 };
 
 export default function page({ params: { username } }: Props) {
-  console.log(" ---------------------------------------------");
-  console.log("file: page.tsx:8  page  username => ", username);
-  console.log(" ---------------------------------------------");
-
-  return <div>page</div>;
+  return (
+    <div>
+      <VerifyCode username={username} />
+    </div>
+  );
 }
